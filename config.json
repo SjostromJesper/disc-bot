@@ -1,14 +1,4 @@
 {
   "prefix": "!",
-  "token": "NzUzOTIzODAyNDA4MTU3MjI2.X1tQQQ.Q9H3SGWE16_1rF7hIZqNCclx-No",
-  "firebaseConfig": {
-    "apiKey": "AIzaSyC267tTII4oUayqw3n0HTkuEpqocwXhJ2s",
-    "authDomain": "discord-bot-ce569.firebaseapp.com",
-    "databaseURL": "https://discord-bot-ce569.firebaseio.com",
-    "projectId": "discord-bot-ce569",
-    "storageBucket": "discord-bot-ce569.appspot.com",
-    "messagingSenderId": "199054070546",
-    "appId": "1:199054070546:web:1d8dcafd8cde19dbd219cb",
-    "measurementId": "G-2275ZLNSZC"
-  }
+  "token": "NzUzOTIzODAyNDA4MTU3MjI2.X1tQQQ.61gWDAWwlKXqNCrtNSa2EjQkj3U"
 }

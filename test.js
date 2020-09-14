@@ -5,4 +5,5 @@ Date.prototype.getWeek = function() {
     return Math.ceil((((this - janFirst) / 86400000) + janFirst.getDay()+1)/7);
 };
 
-console.log(new Date().getWeek());
+//console.log(new Date().getWeek());
+
