@@ -94,7 +94,7 @@ client.on('message', (message) => {
                     message.channel.send(`närvaro har satts för: ${message.member.displayName}`);
                 }
                 else {
-                    message.channel.send(`finns inte i dokumentet: ${message.member.displayName}. eller så är det inte obligatorisk närvaro idag. kan också vara så att jesper suger på att programmera`);
+                    message.channel.send(`finns inte i dokumentet: ${message.member.displayName}. eller så är det inte obligatorisk närvaro idag.\n kan också vara så att jesper suger på att programmera`);
                 }
             });
         }

@@ -87,21 +87,24 @@ function setAttending(fName, lName) {
                     return [4 /*yield*/, sheet.loadCells('A1:J75')];
                 case 3:
                     _a.sent();
+                    dateCell = 0;
                     for (i = 0; i < 10; i++) {
                         if (sheet.getCell(0, i).value === date) {
                             dateCell = i;
                         }
                     }
-                    for (i = 0; i < 75; i++) {
-                        console.log(sheet.getCell(i, 0).value);
-                        if (sheet.getCell(i, 0).value.toLowerCase().includes(fName)) {
-                            console.log(sheet.getCell(i, 1).value);
-                            if (sheet.getCell(i, 1).value.toLowerCase().startsWith(lName)) {
-                                console.log("found");
-                                attending = sheet.getCell(i, dateCell);
-                                attending.value = 'J';
-                                success = true;
-                                break;
+                    if (dateCell !== 0) {
+                        for (i = 0; i < 75; i++) {
+                            console.log(sheet.getCell(i, 0).value);
+                            if (sheet.getCell(i, 0).value.toLowerCase().includes(fName)) {
+                                console.log(sheet.getCell(i, 1).value);
+                                if (sheet.getCell(i, 1).value.toLowerCase().startsWith(lName)) {
+                                    console.log("found");
+                                    attending = sheet.getCell(i, dateCell);
+                                    attending.value = 'J';
+                                    success = true;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -132,7 +135,7 @@ client.on('message', function (message) {
                     message.channel.send("n\u00E4rvaro har satts f\u00F6r: " + message.member.displayName);
                 }
                 else {
-                    message.channel.send("finns inte i dokumentet: " + message.member.displayName + ". eller s\u00E5 \u00E4r det inte obligatorisk n\u00E4rvaro idag. kan ocks\u00E5 vara s\u00E5 att jesper suger p\u00E5 att programmera");
+                    message.channel.send("finns inte i dokumentet: " + message.member.displayName + ". eller s\u00E5 \u00E4r det inte obligatorisk n\u00E4rvaro idag.\n kan ocks\u00E5 vara s\u00E5 att jesper suger p\u00E5 att programmera");
                 }
             });
         }
