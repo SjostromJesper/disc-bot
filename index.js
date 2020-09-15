@@ -70,7 +70,7 @@ function setAttending(fName, lName) {
             switch (_a.label) {
                 case 0:
                     console.log("seaching for " + fName + " " + lName);
-                    success = false;
+                    success = 0;
                     day = new Date().getDate();
                     month = new Date().getMonth() + 1;
                     date = day + "/" + month;
@@ -89,20 +89,39 @@ function setAttending(fName, lName) {
                     _a.sent();
                     dateCell = 0;
                     for (i = 0; i < 10; i++) {
+                        console.log(sheet.getCell(0, i).value);
                         if (sheet.getCell(0, i).value === date) {
                             dateCell = i;
+                            break;
                         }
+                    }
+                    if (dateCell === 0) {
+                        console.log("failed to find date " + date);
+                        success = -1;
+                        return [2 /*return*/, success];
                     }
                     if (dateCell !== 0) {
                         for (i = 0; i < 75; i++) {
                             console.log(sheet.getCell(i, 0).value);
-                            if (sheet.getCell(i, 0).value.toLowerCase().includes(fName)) {
+                            if (sheet.getCell(i, 0).value === null) {
+                                break;
+                            }
+                            else if (sheet.getCell(i, 0).value.toLowerCase().includes(fName)) {
                                 console.log(sheet.getCell(i, 1).value);
-                                if (sheet.getCell(i, 1).value.toLowerCase().startsWith(lName)) {
+                                if (sheet.getCell(i, 1).value === null) {
+                                    break;
+                                }
+                                else if (sheet.getCell(i, 1).value.toLowerCase().startsWith(lName)) {
                                     console.log("found");
                                     attending = sheet.getCell(i, dateCell);
-                                    attending.value = 'J';
-                                    success = true;
+                                    if (attending.value === 'J') {
+                                        console.log("attendance already set");
+                                        success = 2;
+                                    }
+                                    else {
+                                        attending.value = 'J';
+                                        success = 1;
+                                    }
                                     break;
                                 }
                             }
@@ -121,53 +140,43 @@ client.once('ready', function () {
 });
 client.on('message', function (message) {
     if (message.content.startsWith(prefix + "n\u00E4rvaro")) {
-        attendance(message.member.displayName);
+        attendance(message);
     }
     else if (message.content.startsWith(prefix + "links")) {
-        links();
-    }
-    // else if(message.content.startsWith(`${prefix}närvaro`)) {
-    //     const person = message.member.displayName.split(" ");
-    //     if(person.length === 2) {
-    //         setAttending(person[0].toLowerCase(), person[1].toLowerCase()).then((data) => {
-    //             if(data) {
-    //                 message.channel.send(`närvaro har satts för: ${message.member.displayName}`);
-    //             }
-    //             else {
-    //                 message.channel.send(`finns inte i dokumentet: ${message.member.displayName}. eller så är det inte obligatorisk närvaro idag.\n kan också vara så att jesper suger på att programmera`);
-    //             }
-    //         });
-    //     }
-    //     else {
-    //         message.channel.send(`ditt användarnamn är inte korrekt`);
-    //     }
-    // }
-    function attendance(member) {
-        var person = member.split(" ");
-        if (person.length === 2) {
-            setAttending(person[0].toLowerCase(), person[1].toLowerCase()).then(function (data) {
-                if (data) {
-                    message.channel.send("n\u00E4rvaro har satts f\u00F6r: " + message.member.displayName);
-                }
-                else {
-                    message.channel.send("finns inte i dokumentet: " + message.member.displayName + ". eller s\u00E5 \u00E4r det inte obligatorisk n\u00E4rvaro idag.\n kan ocks\u00E5 vara s\u00E5 att jesper suger p\u00E5 att programmera");
-                }
-            });
-        }
-        else {
-            message.channel.send("ditt anv\u00E4ndarnamn \u00E4r inte korrekt");
-        }
-    }
-    function links() {
-        message.channel.send("meet - <https://meet.google.com/fyy-gjzb-aqq>\n" +
-            "terminsplanering - <https://docs.google.com/document/d/1rmcEwQep4ztgzyesjEbxzxsVwfACHr1HS3YJz68FZvY/edit?usp=sharing>\n" +
-            "resursdokument - <https://docs.google.com/document/d/169JysyJbK0pD4FwdL9UHYcr0l1k5UYhpM9SQpHW2dRA/edit?usp=sharing>\n" +
-            "närvaro - <https://docs.google.com/spreadsheets/d/1xFO3eEhJnBrklrU94K6TVEM38Vaf2aFYOqrUasMRtOY/edit?usp=sharing>\n" +
-            "hjälpkön - <https://docs.google.com/document/d/18vpGQhb9IBIcqzjADvKtTh2Wbpnbu3S1CIPc6-kpVis/edit?usp=sharing>");
+        links(message);
     }
     // if (message.content.startsWith(`${prefix}user`)) {
     //     const taggedUser = message.mentions.users.first();
     //     message.author.send(taggedUser.username);
     // }
 });
+function links(message) {
+    message.channel.send("meet - <https://meet.google.com/fyy-gjzb-aqq>\n" +
+        "terminsplanering - <https://docs.google.com/document/d/1rmcEwQep4ztgzyesjEbxzxsVwfACHr1HS3YJz68FZvY/edit?usp=sharing>\n" +
+        "resursdokument - <https://docs.google.com/document/d/169JysyJbK0pD4FwdL9UHYcr0l1k5UYhpM9SQpHW2dRA/edit?usp=sharing>\n" +
+        "närvaro - <https://docs.google.com/spreadsheets/d/1xFO3eEhJnBrklrU94K6TVEM38Vaf2aFYOqrUasMRtOY/edit?usp=sharing>\n" +
+        "hjälpkön - <https://docs.google.com/document/d/18vpGQhb9IBIcqzjADvKtTh2Wbpnbu3S1CIPc6-kpVis/edit?usp=sharing>");
+}
+function attendance(message) {
+    var person = message.member.displayName.split(" ");
+    if (person.length === 2) {
+        setAttending(person[0].toLowerCase(), person[1].toLowerCase()).then(function (data) {
+            if (data === 1) {
+                message.channel.send("N\u00E4rvaro har satts f\u00F6r: " + message.member.displayName);
+            }
+            else if (data === 2) {
+                message.channel.send("Du har redan markerat ditt revir idag, " + message.member.displayName + ".");
+            }
+            else if (data === -1) {
+                message.channel.send("Ingen obligatorisk närvaro idag.");
+            }
+            else if (data === 0) {
+                message.channel.send(message.member.displayName + " finns inte i dokumentet.\n Kolla s\u00E5 ditt anv\u00E4ndarnamn p\u00E5 discord st\u00E4mmer \u00F6verens med ditt namn i n\u00E4rvarolistan.");
+            }
+        });
+    }
+    else {
+        message.channel.send("Kolla s\u00E5 ditt anv\u00E4ndarnamn p\u00E5 discord st\u00E4mmer \u00F6verens med ditt namn i n\u00E4rvarolistan.");
+    }
+}
 client.login(token);
