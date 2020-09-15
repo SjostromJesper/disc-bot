@@ -2,7 +2,7 @@ const {prefix, token} = require('./config.json');
 const Discord = require('discord.js');
 
 
-const { GoogleSpreadsheet } = require('google-spreadsheet');
+const {GoogleSpreadsheet} = require('google-spreadsheet');
 const creds = require('./credentials.json');
 
 const client = new Discord.Client();
@@ -47,18 +47,18 @@ async function setAttending(fName, lName) {
     await sheet.loadCells('A1:J75');
 
     let dateCell = 0;
-    for(let i = 0 ; i < 10 ; i++) {
-        if(sheet.getCell(0, i).value === date) {
+    for (let i = 0; i < 10; i++) {
+        if (sheet.getCell(0, i).value === date) {
             dateCell = i;
         }
     }
 
-    if(dateCell !== 0) {
-        for(let i = 0 ; i < 75 ; i++) {
+    if (dateCell !== 0) {
+        for (let i = 0; i < 75; i++) {
             console.log(sheet.getCell(i, 0).value);
-            if(sheet.getCell(i, 0).value.toLowerCase().includes(fName)) {
+            if (sheet.getCell(i, 0).value.toLowerCase().includes(fName)) {
                 console.log(sheet.getCell(i, 1).value);
-                if(sheet.getCell(i, 1).value.toLowerCase().startsWith(lName)) {
+                if (sheet.getCell(i, 1).value.toLowerCase().startsWith(lName)) {
                     console.log("found");
                     const attending = sheet.getCell(i, dateCell);
                     attending.value = 'J';
@@ -78,7 +78,30 @@ client.once('ready', () => {
 
 client.on('message', (message) => {
 
-    if(message.content.startsWith(`${prefix}links`)) {
+    if (message.content.startsWith(`${prefix}närvaro`)) {
+        attendance(message.member.displayName);
+    }
+    else if (message.content.startsWith(`${prefix}links`)) {
+        links();
+    }
+
+
+    function attendance(member) {
+        const person = member.split(" ");
+        if (person.length === 2) {
+            setAttending(person[0].toLowerCase(), person[1].toLowerCase()).then((data) => {
+                if (data) {
+                    message.channel.send(`närvaro har satts för: ${message.member.displayName}`);
+                } else {
+                    message.channel.send(`finns inte i dokumentet: ${message.member.displayName}. eller så är det inte obligatorisk närvaro idag.\n kan också vara så att jesper suger på att programmera`);
+                }
+            });
+        } else {
+            message.channel.send(`ditt användarnamn är inte korrekt`);
+        }
+    }
+
+    function links() {
         message.channel.send(
             "meet - <https://meet.google.com/fyy-gjzb-aqq>\n" +
             "terminsplanering - <https://docs.google.com/document/d/1rmcEwQep4ztgzyesjEbxzxsVwfACHr1HS3YJz68FZvY/edit?usp=sharing>\n" +
@@ -86,31 +109,6 @@ client.on('message', (message) => {
             "närvaro - <https://docs.google.com/spreadsheets/d/1xFO3eEhJnBrklrU94K6TVEM38Vaf2aFYOqrUasMRtOY/edit?usp=sharing>\n" +
             "hjälpkön - <https://docs.google.com/document/d/18vpGQhb9IBIcqzjADvKtTh2Wbpnbu3S1CIPc6-kpVis/edit?usp=sharing>");
     }
-    else if(message.content.startsWith(`${prefix}närvaro`)) {
-        const person = message.member.displayName.split(" ");
-        if(person.length === 2) {
-            setAttending(person[0].toLowerCase(), person[1].toLowerCase()).then((data) => {
-                if(data) {
-                    message.channel.send(`närvaro har satts för: ${message.member.displayName}`);
-                }
-                else {
-                    message.channel.send(`finns inte i dokumentet: ${message.member.displayName}. eller så är det inte obligatorisk närvaro idag.\n kan också vara så att jesper suger på att programmera`);
-                }
-            });
-        }
-        else {
-            message.channel.send(`ditt användarnamn är inte korrekt`);
-        }
-    }
-
-
-
-
-
-
-
-
-
 
 
     // if (message.content.startsWith(`${prefix}user`)) {
