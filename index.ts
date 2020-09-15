@@ -103,6 +103,16 @@ client.on('message', (message) => {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
     // if (message.content.startsWith(`${prefix}user`)) {
     //     const taggedUser = message.mentions.users.first();
     //     message.author.send(taggedUser.username);

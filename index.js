@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,8 +35,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+exports.__esModule = true;
 var _a = require('./config.json'), prefix = _a.prefix, token = _a.token;
 var Discord = require('discord.js');
+var players = require('./game/players.json');
 var GoogleSpreadsheet = require('google-spreadsheet').GoogleSpreadsheet;
 var creds = require('./credentials.json');
 var client = new Discord.Client();
@@ -142,6 +145,17 @@ client.on('message', function (message) {
         else {
             message.channel.send("ditt anv\u00E4ndarnamn \u00E4r inte korrekt");
         }
+    }
+    else if (message.content.startsWith(prefix + "balance")) {
+        var foo = players.players;
+        for (var i = 0; i < foo.length; i++) {
+            if (foo[i].name === message.author.username) {
+                console.log(foo[i].balance);
+            }
+        }
+    }
+    else if (message.content.startsWith(prefix + "cheat")) {
+        players.SEAKING.balance += 400;
     }
     // if (message.content.startsWith(`${prefix}user`)) {
     //     const taggedUser = message.mentions.users.first();
