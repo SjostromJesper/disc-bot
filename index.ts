@@ -27,11 +27,11 @@ async function accessSpreadsheet() {
 async function setAttending(fName, lName) {
     console.log("seaching for " + fName + " " + lName);
 
-    let success = 0;
+    let success: number = 0;
 
-    const day = new Date().getDate();
-    const month = new Date().getMonth() + 1;
-    const date = `${day}/${month}`;
+    const day: number = new Date().getDate();
+    const month: number = new Date().getMonth() + 1;
+    const date: string = `${day}/${month}`;
 
     await doc.useServiceAccountAuth({
         client_email: creds.client_email,
@@ -43,7 +43,7 @@ async function setAttending(fName, lName) {
 
     await sheet.loadCells('A1:J75');
 
-    let dateCell = 0;
+    let dateCell: number = 0;
     for (let i = 0; i < 10; i++) {
         console.log(sheet.getCell(0, i).value);
         if (sheet.getCell(0, i).value === date) {
@@ -72,7 +72,7 @@ async function setAttending(fName, lName) {
                 }
                 else if (sheet.getCell(i, 1).value.toLowerCase().startsWith(lName)) {
                     console.log("found");
-                    const attending = sheet.getCell(i, dateCell);
+                    const attending: any = sheet.getCell(i, dateCell);
                     if(attending.value === 'J') {
                         console.log("attendance already set");
                         success = 2;
@@ -119,9 +119,9 @@ function links(message) {
 }
 
 function attendance(message) {
-    const person = message.member.displayName.split(" ");
+    const person: Array<string> = message.member.displayName.split(" ");
     if (person.length === 2) {
-        setAttending(person[0].toLowerCase(), person[1].toLowerCase()).then((data) => {
+        setAttending(person[0].toLowerCase(), person[1].toLowerCase()).then((data:number) => {
             if (data === 1) {
                 message.channel.send(`Närvaro har satts för: ${message.member.displayName}`);
             }
