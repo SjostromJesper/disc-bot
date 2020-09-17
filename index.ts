@@ -52,7 +52,7 @@ async function setAttending(fName, lName) {
         }
     }
 
-    if(dateCell === 0) {
+    if (dateCell === 0) {
         console.log("failed to find date " + date);
         success = -1;
         return success
@@ -62,22 +62,19 @@ async function setAttending(fName, lName) {
         for (let i = 0; i < 75; i++) {
             console.log(sheet.getCell(i, 0).value);
 
-            if(sheet.getCell(i, 0).value === null) {
+            if (sheet.getCell(i, 0).value === null) {
                 break;
-            }
-            else if (sheet.getCell(i, 0).value.toLowerCase().includes(fName)) {
+            } else if (sheet.getCell(i, 0).value.toLowerCase().includes(fName)) {
                 console.log(sheet.getCell(i, 1).value);
-                if(sheet.getCell(i, 1).value === null) {
+                if (sheet.getCell(i, 1).value === null) {
                     break;
-                }
-                else if (sheet.getCell(i, 1).value.toLowerCase().startsWith(lName)) {
+                } else if (sheet.getCell(i, 1).value.toLowerCase().startsWith(lName)) {
                     console.log("found");
                     const attending: any = sheet.getCell(i, dateCell);
-                    if(attending.value === 'J') {
+                    if (attending.value === 'J') {
                         console.log("attendance already set");
                         success = 2;
-                    }
-                    else {
+                    } else {
                         attending.value = 'J';
                         success = 1;
                     }
@@ -94,14 +91,27 @@ client.once('ready', () => {
     console.log("live!");
 });
 
-client.on('message', (message) => {
+let re = prefix + /[a-z]/i;
 
-    if (message.content.startsWith(`${prefix}närvaro`)) {
-        attendance(message);
+const words = ['!bot', '!links', '!närvaro'];
+
+client.on('message', (message) => {
+    if(message.channel.id === "754790321556291745") {
+        if (message.content.startsWith(`${prefix}bot`)) {
+            message.channel.send("This is me: <https://github.com/SjostromJesper/disc-bot>")
+        }
+
+        if (message.content.startsWith(`${prefix}närvaro`)) {
+            attendance(message);
+        } else if (message.content.startsWith(`${prefix}links`)) {
+            links(message);
+        }
     }
-    else if (message.content.startsWith(`${prefix}links`)) {
-        links(message);
+    else if(words.includes(message.content)) {
+        message.channel.send('Please visit me in "#bot-kommandon" instead.')
     }
+
+
 
     // if (message.content.startsWith(`${prefix}user`)) {
     //     const taggedUser = message.mentions.users.first();
@@ -121,17 +131,14 @@ function links(message) {
 function attendance(message) {
     const person: Array<string> = message.member.displayName.split(" ");
     if (person.length === 2) {
-        setAttending(person[0].toLowerCase(), person[1].toLowerCase()).then((data:number) => {
+        setAttending(person[0].toLowerCase(), person[1].toLowerCase()).then((data: number) => {
             if (data === 1) {
                 message.channel.send(`Närvaro har satts för: ${message.member.displayName}`);
-            }
-            else if( data === 2) {
+            } else if (data === 2) {
                 message.channel.send(`Du har redan markerat ditt revir idag, ${message.member.displayName}.`);
-            }
-            else if( data === -1) {
+            } else if (data === -1) {
                 message.channel.send("Ingen obligatorisk närvaro idag.");
-            }
-            else if( data === 0) {
+            } else if (data === 0) {
                 message.channel.send(`${message.member.displayName} finns inte i dokumentet.\n Kolla så ditt användarnamn på discord stämmer överens med ditt namn i närvarolistan.`);
             }
         });

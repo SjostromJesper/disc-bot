@@ -138,12 +138,22 @@ function setAttending(fName, lName) {
 client.once('ready', function () {
     console.log("live!");
 });
+var re = prefix + /[a-z]/i;
+var words = ['!bot', '!links', '!närvaro'];
 client.on('message', function (message) {
-    if (message.content.startsWith(prefix + "n\u00E4rvaro")) {
-        attendance(message);
+    if (message.channel.id === "754790321556291745") {
+        if (message.content.startsWith(prefix + "bot")) {
+            message.channel.send("This is me: <https://github.com/SjostromJesper/disc-bot>");
+        }
+        if (message.content.startsWith(prefix + "n\u00E4rvaro")) {
+            attendance(message);
+        }
+        else if (message.content.startsWith(prefix + "links")) {
+            links(message);
+        }
     }
-    else if (message.content.startsWith(prefix + "links")) {
-        links(message);
+    else if (words.includes(message.content)) {
+        message.channel.send('Please visit me in "#bot-kommandon" instead.');
     }
     // if (message.content.startsWith(`${prefix}user`)) {
     //     const taggedUser = message.mentions.users.first();
