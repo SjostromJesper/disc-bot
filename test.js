@@ -7,3 +7,11 @@ Date.prototype.getWeek = function() {
 
 //console.log(new Date().getWeek());
 
+const func1 = () => {
+    console.log("doing stuff in func1");
+};
+
+addEventListener(event => {
+    console.log("doing stuff");
+
+});

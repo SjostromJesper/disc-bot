@@ -102,7 +102,6 @@ function setAttending(fName, lName) {
                     }
                     if (dateCell !== 0) {
                         for (i = 0; i < 75; i++) {
-                            console.log(sheet.getCell(i, 0).value);
                             if (sheet.getCell(i, 0).value === null) {
                                 break;
                             }
@@ -138,7 +137,6 @@ function setAttending(fName, lName) {
 client.once('ready', function () {
     console.log("live!");
 });
-var re = prefix + /[a-z]/i;
 var words = ['!bot', '!links', '!närvaro'];
 client.on('message', function (message) {
     if (message.channel.id === "754790321556291745") {
@@ -161,7 +159,7 @@ client.on('message', function (message) {
     // }
 });
 function links(message) {
-    message.channel.send("meet - <https://meet.google.com/fyy-gjzb-aqq>\n" +
+    message.channel.send("meet - <https://meet.google.com/lookup/ehccdumqux>\n" +
         "terminsplanering - <https://docs.google.com/document/d/1rmcEwQep4ztgzyesjEbxzxsVwfACHr1HS3YJz68FZvY/edit?usp=sharing>\n" +
         "resursdokument - <https://docs.google.com/document/d/169JysyJbK0pD4FwdL9UHYcr0l1k5UYhpM9SQpHW2dRA/edit?usp=sharing>\n" +
         "närvaro - <https://docs.google.com/spreadsheets/d/1xFO3eEhJnBrklrU94K6TVEM38Vaf2aFYOqrUasMRtOY/edit?usp=sharing>\n" +
