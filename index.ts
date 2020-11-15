@@ -41,10 +41,10 @@ async function setAttending(fName, lName) {
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[0];
 
-    await sheet.loadCells('A1:J75');
+    await sheet.loadCells('A1:Z75');
 
     let dateCell: number = 0;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 25; i++) {
         console.log(sheet.getCell(0, i).value);
         if (sheet.getCell(0, i).value === date) {
             dateCell = i;
@@ -115,9 +115,10 @@ client.on('message', (message) => {
     // }
 });
 
+//https://meet.google.com/lookup/ehccdumqux
 function links(message) {
     message.channel.send(
-        "meet - <https://meet.google.com/lookup/ehccdumqux>\n" +
+        "meet - <https://meet.google.com/lookup/gseu5eqhyr\n" +
         "terminsplanering - <https://docs.google.com/document/d/1rmcEwQep4ztgzyesjEbxzxsVwfACHr1HS3YJz68FZvY/edit?usp=sharing>\n" +
         "resursdokument - <https://docs.google.com/document/d/169JysyJbK0pD4FwdL9UHYcr0l1k5UYhpM9SQpHW2dRA/edit?usp=sharing>\n" +
         "närvaro - <https://docs.google.com/spreadsheets/d/1xFO3eEhJnBrklrU94K6TVEM38Vaf2aFYOqrUasMRtOY/edit?usp=sharing>\n" +
@@ -126,7 +127,7 @@ function links(message) {
 
 function attendance(message) {
     const person: Array<string> = message.member.displayName.split(" ");
-    if (person.length === 2) {
+    if (person.length >= 2) {
         setAttending(person[0].toLowerCase(), person[1].toLowerCase()).then((data: number) => {
             if (data === 1) {
                 message.channel.send(`Närvaro har satts för: ${message.member.displayName}`);

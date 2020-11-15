@@ -84,11 +84,11 @@ function setAttending(fName, lName) {
                 case 2:
                     _a.sent();
                     sheet = doc.sheetsByIndex[0];
-                    return [4 /*yield*/, sheet.loadCells('A1:J75')];
+                    return [4 /*yield*/, sheet.loadCells('A1:Z75')];
                 case 3:
                     _a.sent();
                     dateCell = 0;
-                    for (i = 0; i < 10; i++) {
+                    for (i = 0; i < 25; i++) {
                         console.log(sheet.getCell(0, i).value);
                         if (sheet.getCell(0, i).value === date) {
                             dateCell = i;
@@ -158,8 +158,9 @@ client.on('message', function (message) {
     //     message.author.send(taggedUser.username);
     // }
 });
+//https://meet.google.com/lookup/ehccdumqux
 function links(message) {
-    message.channel.send("meet - <https://meet.google.com/lookup/ehccdumqux>\n" +
+    message.channel.send("meet - <https://meet.google.com/lookup/gseu5eqhyr\n" +
         "terminsplanering - <https://docs.google.com/document/d/1rmcEwQep4ztgzyesjEbxzxsVwfACHr1HS3YJz68FZvY/edit?usp=sharing>\n" +
         "resursdokument - <https://docs.google.com/document/d/169JysyJbK0pD4FwdL9UHYcr0l1k5UYhpM9SQpHW2dRA/edit?usp=sharing>\n" +
         "närvaro - <https://docs.google.com/spreadsheets/d/1xFO3eEhJnBrklrU94K6TVEM38Vaf2aFYOqrUasMRtOY/edit?usp=sharing>\n" +
@@ -167,7 +168,7 @@ function links(message) {
 }
 function attendance(message) {
     var person = message.member.displayName.split(" ");
-    if (person.length === 2) {
+    if (person.length >= 2) {
         setAttending(person[0].toLowerCase(), person[1].toLowerCase()).then(function (data) {
             if (data === 1) {
                 message.channel.send("N\u00E4rvaro har satts f\u00F6r: " + message.member.displayName);
