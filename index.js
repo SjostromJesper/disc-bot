@@ -139,14 +139,15 @@ client.once('ready', function () {
 });
 var words = ['!bot', '!links', '!närvaro'];
 client.on('message', function (message) {
+    var mess = message.content.toLowerCase();
     if (message.channel.id === "754790321556291745") {
-        if (message.content.startsWith(prefix + "bot")) {
+        if (mess.startsWith(prefix + "bot")) {
             message.channel.send("This is me: <https://github.com/SjostromJesper/disc-bot>");
         }
-        if (message.content.startsWith(prefix + "n\u00E4rvaro")) {
+        if (mess.startsWith(prefix + "n\u00E4rvaro")) {
             attendance(message);
         }
-        else if (message.content.startsWith(prefix + "links")) {
+        else if (mess.startsWith(prefix + "links")) {
             links(message);
         }
     }
@@ -160,7 +161,7 @@ client.on('message', function (message) {
 });
 //https://meet.google.com/lookup/ehccdumqux
 function links(message) {
-    message.channel.send("meet - <https://meet.google.com/lookup/gseu5eqhyr\n" +
+    message.channel.send("meet - <https://meet.google.com/lookup/gseu5eqhyr>\n" +
         "terminsplanering - <https://docs.google.com/document/d/1rmcEwQep4ztgzyesjEbxzxsVwfACHr1HS3YJz68FZvY/edit?usp=sharing>\n" +
         "resursdokument - <https://docs.google.com/document/d/169JysyJbK0pD4FwdL9UHYcr0l1k5UYhpM9SQpHW2dRA/edit?usp=sharing>\n" +
         "närvaro - <https://docs.google.com/spreadsheets/d/1xFO3eEhJnBrklrU94K6TVEM38Vaf2aFYOqrUasMRtOY/edit?usp=sharing>\n" +
