@@ -159,9 +159,10 @@ client.on('message', function (message) {
     //     message.author.send(taggedUser.username);
     // }
 });
-//https://meet.google.com/lookup/ehccdumqux
+var frontendKurserMeet = "https://meet.google.com/lookup/ehccdumqux";
+var arbetsmetodikMeet = "https://meet.google.com/lookup/gseu5eqhyr";
 function links(message) {
-    message.channel.send("meet - <https://meet.google.com/lookup/gseu5eqhyr>\n" +
+    message.channel.send("meet - <" + frontendKurserMeet + ">\n" +
         "terminsplanering - <https://docs.google.com/document/d/1rmcEwQep4ztgzyesjEbxzxsVwfACHr1HS3YJz68FZvY/edit?usp=sharing>\n" +
         "resursdokument - <https://docs.google.com/document/d/169JysyJbK0pD4FwdL9UHYcr0l1k5UYhpM9SQpHW2dRA/edit?usp=sharing>\n" +
         "närvaro - <https://docs.google.com/spreadsheets/d/1xFO3eEhJnBrklrU94K6TVEM38Vaf2aFYOqrUasMRtOY/edit?usp=sharing>\n" +
