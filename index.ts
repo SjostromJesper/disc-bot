@@ -121,13 +121,38 @@ client.on('message', (message) => {
 const frontendKurserMeet = "https://meet.google.com/lookup/ehccdumqux";
 const arbetsmetodikMeet = "https://meet.google.com/lookup/gseu5eqhyr";
 
+const linkColor = '#63324c';
+const meet = new Discord.MessageEmbed()
+    .setColor(linkColor)
+    .setTitle('meet')
+    .setURL(frontendKurserMeet);
+
+const terminsplanering = new Discord.MessageEmbed()
+    .setColor(linkColor)
+    .setTitle('terminsplanering')
+    .setURL('https://docs.google.com/document/d/1rmcEwQep4ztgzyesjEbxzxsVwfACHr1HS3YJz68FZvY/edit?usp=sharing');
+
+const resursdokument = new Discord.MessageEmbed()
+    .setColor(linkColor)
+    .setTitle('resursdokument')
+    .setURL('https://docs.google.com/document/d/169JysyJbK0pD4FwdL9UHYcr0l1k5UYhpM9SQpHW2dRA/edit?usp=sharing');
+
+const närvaro = new Discord.MessageEmbed()
+    .setColor(linkColor)
+    .setTitle('närvaro')
+    .setURL("https://docs.google.com/spreadsheets/d/1xFO3eEhJnBrklrU94K6TVEM38Vaf2aFYOqrUasMRtOY/edit?usp=sharing");
+
+const hjälpkön = new Discord.MessageEmbed()
+    .setColor(linkColor)
+    .setTitle('hjälpkön')
+    .setURL("https://docs.google.com/document/d/18vpGQhb9IBIcqzjADvKtTh2Wbpnbu3S1CIPc6-kpVis/edit?usp=sharing");
+
 function links(message) {
-    message.channel.send(
-        "meet - <" + frontendKurserMeet +">\n" +
-        "terminsplanering - <https://docs.google.com/document/d/1rmcEwQep4ztgzyesjEbxzxsVwfACHr1HS3YJz68FZvY/edit?usp=sharing>\n" +
-        "resursdokument - <https://docs.google.com/document/d/169JysyJbK0pD4FwdL9UHYcr0l1k5UYhpM9SQpHW2dRA/edit?usp=sharing>\n" +
-        "närvaro - <https://docs.google.com/spreadsheets/d/1xFO3eEhJnBrklrU94K6TVEM38Vaf2aFYOqrUasMRtOY/edit?usp=sharing>\n" +
-        "hjälpkön - <https://docs.google.com/document/d/18vpGQhb9IBIcqzjADvKtTh2Wbpnbu3S1CIPc6-kpVis/edit?usp=sharing>");
+    message.channel.send(meet);
+    message.channel.send(terminsplanering);
+    message.channel.send(resursdokument);
+    message.channel.send(närvaro);
+    message.channel.send(hjälpkön);
 }
 
 function attendance(message) {
